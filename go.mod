@@ -1,0 +1,29 @@
+module gitlab.com/expected.sh/agent
+
+require (
+	github.com/Microsoft/go-winio v0.4.11
+	github.com/Microsoft/hcsshim v0.7.12
+	github.com/containerd/containerd v1.2.0
+	github.com/containerd/continuity v0.0.0-20181001140422-bd77b46c8352
+	github.com/containerd/cri v0.0.0-20181012222137-f913714917d2
+	github.com/containerd/fifo v0.0.0-20180307165137-3d5202aec260
+	github.com/containerd/typeurl v0.0.0-20180627222232-a93fcdb778cd
+	github.com/docker/distribution v0.0.0-20170213194809-b38e5838b7b2
+	github.com/docker/go-events v0.0.0-20170721190031-9461782956ad
+	github.com/gogo/googleapis v1.0.0
+	github.com/gogo/protobuf v1.0.0
+	github.com/golang/protobuf v1.2.0
+	github.com/opencontainers/go-digest v0.0.0-20180430190053-c9281466c8b2
+	github.com/opencontainers/image-spec v1.0.1
+	github.com/opencontainers/runc v0.0.0-20181016192151-58592df56734
+	github.com/opencontainers/runtime-spec v0.0.0-20180909173843-eba862dc2470
+	github.com/pkg/errors v0.8.0
+	github.com/sirupsen/logrus v1.0.0
+	github.com/syndtr/gocapability v0.0.0-20170704070218-db04d3cc01c8
+	golang.org/x/net v0.0.0-20181106065722-10aee1819953
+	golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f
+	golang.org/x/sys v0.0.0-20181128092732-4ed8d59d0b35
+	golang.org/x/text v0.3.0
+	google.golang.org/genproto v0.0.0-20181127195345-31ac5d88444a
+	google.golang.org/grpc v1.16.0
+)
