@@ -1,8 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
 	"gitlab.com/expected.sh/agent/pkg/runc"
 	"log"
 	"os"
@@ -33,26 +31,26 @@ func main() {
 
 		if has {
 			log.Println("delete")
-			if err = client.Delete(context.Background(), id,
-				&runc.DeleteOpts{ Force: true }); err != nil {
+			if err = client.Delete(id, &runc.DeleteOps{Force: true}); err != nil {
 				log.Fatalf("unable to delete the container: %v\n", err)
 			}
 		}
 
-	/*	log.Println("create")
-		if err = run.Create(context.Background(), id, "/home/vagrant/go/src/gitlab.com/expected.sh/agent",
-			&runc.CreateOpts{}); err != nil {
+		log.Println("create")
+		if err = client.Create(id, &runc.CreateOpts{
+			Bundle: "/home/vagrant/go/src/gitlab.com/expected.sh/agent" }); err != nil {
 			log.Fatalf("unable to create the container: %v\n", err)
 		}
-		log.Println("start")
-		if err = run.Start(context.Background(), id); err != nil {
-			log.Fatalf("unable to start the container: %v\n", err)
-		}
-		log.Println("state")
-		container, err := run.State(context.Background(), id)
-		if err != nil {
-			log.Fatalf("unable to get the container's state: %v\n", err)
-		}
-		log.Printf("pid: %v\n", container.Pid)
-	}*/
+		/*	log.Println("start")
+			if err = run.Start(context.Background(), id); err != nil {
+				log.Fatalf("unable to start the container: %v\n", err)
+			}
+			log.Println("state")
+			container, err := run.State(context.Background(), id)
+			if err != nil {
+				log.Fatalf("unable to get the container's state: %v\n", err)
+			}
+			log.Printf("pid: %v\n", container.Pid)
+		*/
+	}
 }

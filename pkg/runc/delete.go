@@ -5,5 +5,15 @@ type DeleteOps struct {
 }
 
 func (client *Client) Delete(id string, opts *DeleteOps) error {
-	args := []string{}
+	args := []string{"delete"}
+	if opts != nil {
+		if opts.Force {
+			args = append(args, "--force")
+		}
+	}
+	args = append(args, id)
+	if _, err := client.runCommand(args...); err != nil {
+		return err
+	}
+	return nil
 }
