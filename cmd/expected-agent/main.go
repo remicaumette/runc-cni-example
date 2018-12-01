@@ -3,49 +3,56 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/containerd/containerd"
-	"github.com/containerd/containerd/cio"
-	"github.com/containerd/containerd/namespaces"
-	"github.com/containerd/containerd/oci"
+	"gitlab.com/expected.sh/agent/pkg/runc"
+	"log"
 	"os"
 )
 
-func checkError(err error) {
+func hasContainer(client runc.Client, id string) (bool, error) {
+	containers, err := client.List()
 	if err != nil {
-		fmt.Printf("an error occurred: %v\n", err)
-		os.Exit(1)
+		return false, err
 	}
+	for _, container := range containers {
+		if container.ID == id {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 func main() {
-	client, err := containerd.New("/run/containerd/containerd.sock")
-	checkError(err)
-	defer client.Close()
-	fmt.Printf("connected to the client\n")
-	ctx := namespaces.WithNamespace(context.Background(), "default")
+	if len(os.Args) > 1 {
+		client := runc.New("/usr/local/bin/runc")
+		id := os.Args[1]
 
-	//fmt.Printf("pulling redis image...\n")
-	//image, err := client.Pull(ctx, "docker.io/library/redis:alpine", containerd.WithPullUnpack)
-	image, err := client.GetImage(credis:alpine")
-	checkError(err)
-	//fmt.Printf("pulled (%v)!\n", image.Target().Digest.String())
+		has, err := hasContainer(client, id)
+		if err != nil {
+			log.Fatalf("unable to retreive containers: %v\n", err)
+		}
 
-	fmt.Printf("creating redis container...\n")
-	container, err := client.NewContainer(ctx, "redis",
-		containerd.WithNewSnapshot("redis-snapshot", image),
-		containerd.WithNewSpec(oci.WithImageConfig(image)))
-	checkError(err)
-	defer container.Delete(ctx, containerd.WithSnapshotCleanup)
-	fmt.Printf("created (%v)!\n", container.ID())
+		if has {
+			log.Println("delete")
+			if err = client.Delete(context.Background(), id,
+				&runc.DeleteOpts{ Force: true }); err != nil {
+				log.Fatalf("unable to delete the container: %v\n", err)
+			}
+		}
 
-	fmt.Printf("starting the container...\n")
-	task, err := container.NewTask(ctx, cio.NewCreator(cio.WithStdio))
-	checkError(err)
-	defer task.Delete(ctx)
-	statusCodeChannel, err := task.Wait(ctx)
-	checkError(err)
-	checkError(task.Start(ctx))
-
-	statusCode := <- statusCodeChannel
-	fmt.Printf("process exited with status: %v\n", statusCode.ExitCode())
+	/*	log.Println("create")
+		if err = run.Create(context.Background(), id, "/home/vagrant/go/src/gitlab.com/expected.sh/agent",
+			&runc.CreateOpts{}); err != nil {
+			log.Fatalf("unable to create the container: %v\n", err)
+		}
+		log.Println("start")
+		if err = run.Start(context.Background(), id); err != nil {
+			log.Fatalf("unable to start the container: %v\n", err)
+		}
+		log.Println("state")
+		container, err := run.State(context.Background(), id)
+		if err != nil {
+			log.Fatalf("unable to get the container's state: %v\n", err)
+		}
+		log.Printf("pid: %v\n", container.Pid)
+	}*/
 }

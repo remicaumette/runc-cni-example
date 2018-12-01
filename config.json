@@ -1,7 +1,7 @@
 {
 	"ociVersion": "1.0.1-dev",
 	"process": {
-		"terminal": true,
+		"terminal": false,
 		"user": {
 			"uid": 0,
 			"gid": 0
@@ -51,7 +51,7 @@
 		"noNewPrivileges": true
 	},
 	"root": {
-		"path": "rootfs",
+		"path": "/home/vagrant/go/src/gitlab.com/expected.sh/agent/rootfs",
 		"readonly": true
 	},
 	"hostname": "runc",
