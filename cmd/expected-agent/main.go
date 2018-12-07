@@ -20,10 +20,12 @@ func hasContainer(client runc.Client, id string) (bool, error) {
 }
 
 func main() {
+	log.SetFlags(log.Ldate|log.Ltime|log.Llongfile)
 	if len(os.Args) > 1 {
 		client := runc.New("/usr/local/bin/runc")
 		id := os.Args[1]
 
+		log.Println("list")
 		has, err := hasContainer(client, id)
 		if err != nil {
 			log.Fatalf("unable to retreive containers: %v\n", err)
@@ -41,6 +43,7 @@ func main() {
 			Bundle: "/home/vagrant/go/src/gitlab.com/expected.sh/agent" }); err != nil {
 			log.Fatalf("unable to create the container: %v\n", err)
 		}
+		println("ok")
 		/*	log.Println("start")
 			if err = run.Start(context.Background(), id); err != nil {
 				log.Fatalf("unable to start the container: %v\n", err)

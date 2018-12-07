@@ -56,9 +56,10 @@ Vagrant.configure("2") do |config|
         wget https://raw.githubusercontent.com/containerd/containerd/master/containerd.service -O /etc/systemd/system/containerd.service
         systemctl enable containerd
         systemctl start containerd
-        echo "export GOPATH=~/go" >> ~/.profile
-        echo "export GOROOT=/usr/local/go" >> ~/.profile
-        echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> ~/.profile
-        echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> ~/.profile
+        echo "export GOPATH=~/go" >> ~/.bashrc
+        echo "export GOROOT=/usr/local/go" >> ~/.bashrc
+        echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> ~/.bashrc
+        echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> ~/.bashrc
+        echo "export GO111MODULE=on" >> ~/.bashrc
     SHELL
 end
