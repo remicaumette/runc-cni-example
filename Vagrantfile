@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
         chmod a+x /usr/local/bin/runc
         wget https://storage.googleapis.com/gvisor/releases/nightly/latest/runsc -O /usr/local/bin/runsc
         chmod a+x /usr/local/bin/runsc
+        wget https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz
+        tar xvf cni-amd64-v0.6.0.tgz -C /usr/local/bin
         mkdir /etc/containerd/
         containerd config default > /etc/containerd/config.toml
         mkdir /opt/cni
@@ -56,10 +58,10 @@ Vagrant.configure("2") do |config|
         wget https://raw.githubusercontent.com/containerd/containerd/master/containerd.service -O /etc/systemd/system/containerd.service
         systemctl enable containerd
         systemctl start containerd
-        echo "export GOPATH=~/go" >> ~/.bashrc
-        echo "export GOROOT=/usr/local/go" >> ~/.bashrc
-        echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> ~/.bashrc
-        echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> ~/.bashrc
-        echo "export GO111MODULE=on" >> ~/.bashrc
+        echo "export GOPATH=~/go" >> /home/vagrant/.bashrc
+        echo "export GOROOT=/usr/local/go" >> /home/vagrant/.bashrc
+        echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> /home/vagrant/.bashrc
+        echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> /home/vagrant/.bashrc
+        echo "export GO111MODULE=on" >> /home/vagrant/.bashrc
     SHELL
 end

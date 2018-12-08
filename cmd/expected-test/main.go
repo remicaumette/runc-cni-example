@@ -17,26 +17,35 @@ func checkErr(err error) {
 	}
 }
 
-func setupNetworking(runtime runc.Runc) {
+
+func setupNetworking(runtime runc.Runc, networking cni.CNI) {
 	state, err := runtime.State(context.Background(), "hello")
 	checkErr(err)
 	log.Printf("%v\n", state.Pid)
-	networking, err := cni.New(cni.WithMinNetworkCount(2),
-		cni.WithPluginConfDir("/home/vagrant/go/src/gitlab.com/expected.sh/agent/net"),
-		cni.WithPluginDir([]string{"/opt/cni/"}),
-		 )
-
-	checkErr(err)
-	checkErr(networking.Load(cni.WithLoNetwork, cni.WithDefaultConf))
 	result, err := networking.Setup("eth0", fmt.Sprintf("/proc/%v/ns/net", state.Pid), cni.WithCapabilityPortMap([]cni.PortMapping{
 		{
 			HostPort: 8080,
 			ContainerPort: 80,
+			HostIP: "10.1.0.1",
 			Protocol: "tcp",
 		},
 	}))
 	checkErr(err)
-	log.Printf("%v\n", result)
+	log.Printf("=== INTERFACES ===\n")
+	for _, config := range result.Interfaces {
+		log.Printf("sandbox: %v\n", config.Sandbox)
+		for _, ip := range config.IPConfigs {
+			log.Printf("ip: %v mask: %v gateway: %v\n", ip.IP.String(), ip.IP.DefaultMask(), ip.Gateway.String())
+		}
+	}
+	log.Printf("==================\n")
+
+}
+
+func destroyNetworking(runtime runc.Runc, networking cni.CNI) {
+	state, err := runtime.State(context.Background(), "hello")
+	checkErr(err)
+	networking.Remove("eth0", fmt.Sprintf("/proc/%v/ns/net", state.Pid))
 }
 
 func main() {
@@ -44,15 +53,9 @@ func main() {
 	socket, err := runc.NewTempConsoleSocket()
 	checkErr(err)
 
-	containers, err := runtime.List(context.Background())
-	checkErr(err)
-	for _, container := range containers {
-		if container.ID == "hello" {
-			checkErr(runtime.Delete(context.Background(), "hello", &runc.DeleteOpts{
-				Force: true,
-			}))
-		}
-	}
+	runtime.Delete(context.Background(), "hello", &runc.DeleteOpts{
+		Force: true,
+	})
 
 	defer socket.Close()
 	err = runtime.Create(context.Background(), "hello", "/home/vagrant/go/src/gitlab.com/expected.sh/agent", &runc.CreateOpts{
@@ -61,7 +64,25 @@ func main() {
 	checkErr(err)
 	err = runtime.Start(context.Background(), "hello")
 	checkErr(err)
-	setupNetworking(runtime)
+	networking, err := cni.New(cni.WithMinNetworkCount(2),
+		cni.WithPluginConfDir("/home/vagrant/go/src/gitlab.com/expected.sh/agent/net"),
+		cni.WithPluginDir([]string{"/opt/cni/"}),
+	)
+	checkErr(err)
+	checkErr(networking.Load(cni.WithLoNetwork, cni.WithDefaultConf))
+	setupNetworking(runtime, networking)
+	defer func() {
+		println()
+		log.Printf("delete network...\n")
+		destroyNetworking(runtime, networking)
+
+		log.Printf("delete container...\n")
+		runtime.Delete(context.Background(), "hello", &runc.DeleteOpts{
+			Force: true,
+		})
+
+		log.Printf("goodbye\n")
+	}()
 	console, err := socket.ReceiveMaster()
 	checkErr(err)
 	go func() {
