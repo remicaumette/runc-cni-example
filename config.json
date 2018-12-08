@@ -1,7 +1,7 @@
 {
 	"ociVersion": "1.0.1-dev",
 	"process": {
-		"terminal": false,
+		"terminal": true,
 		"user": {
 			"uid": 0,
 			"gid": 0
@@ -16,29 +16,84 @@
 		"cwd": "/",
 		"capabilities": {
 			"bounding": [
-				"CAP_AUDIT_WRITE",
+				"CAP_CHOWN",
+				"CAP_DAC_OVERRIDE",
+				"CAP_FSETID",
+				"CAP_FOWNER",
+				"CAP_MKNOD",
+				"CAP_NET_RAW",
+				"CAP_SETGID",
+				"CAP_SETUID",
+				"CAP_SETFCAP",
+				"CAP_SETPCAP",
+				"CAP_NET_BIND_SERVICE",
+				"CAP_SYS_CHROOT",
 				"CAP_KILL",
-				"CAP_NET_BIND_SERVICE"
+				"CAP_AUDIT_WRITE"
 			],
 			"effective": [
-				"CAP_AUDIT_WRITE",
+				"CAP_CHOWN",
+				"CAP_DAC_OVERRIDE",
+				"CAP_FSETID",
+				"CAP_FOWNER",
+				"CAP_MKNOD",
+				"CAP_NET_RAW",
+				"CAP_SETGID",
+				"CAP_SETUID",
+				"CAP_SETFCAP",
+				"CAP_SETPCAP",
+				"CAP_NET_BIND_SERVICE",
+				"CAP_SYS_CHROOT",
 				"CAP_KILL",
-				"CAP_NET_BIND_SERVICE"
+				"CAP_AUDIT_WRITE"
 			],
 			"inheritable": [
-				"CAP_AUDIT_WRITE",
+				"CAP_CHOWN",
+				"CAP_DAC_OVERRIDE",
+				"CAP_FSETID",
+				"CAP_FOWNER",
+				"CAP_MKNOD",
+				"CAP_NET_RAW",
+				"CAP_SETGID",
+				"CAP_SETUID",
+				"CAP_SETFCAP",
+				"CAP_SETPCAP",
+				"CAP_NET_BIND_SERVICE",
+				"CAP_SYS_CHROOT",
 				"CAP_KILL",
-				"CAP_NET_BIND_SERVICE"
+				"CAP_AUDIT_WRITE"
 			],
 			"permitted": [
-				"CAP_AUDIT_WRITE",
+				"CAP_CHOWN",
+				"CAP_DAC_OVERRIDE",
+				"CAP_FSETID",
+				"CAP_FOWNER",
+				"CAP_MKNOD",
+				"CAP_NET_RAW",
+				"CAP_SETGID",
+				"CAP_SETUID",
+				"CAP_SETFCAP",
+				"CAP_SETPCAP",
+				"CAP_NET_BIND_SERVICE",
+				"CAP_SYS_CHROOT",
 				"CAP_KILL",
-				"CAP_NET_BIND_SERVICE"
+				"CAP_AUDIT_WRITE"
 			],
 			"ambient": [
-				"CAP_AUDIT_WRITE",
+				"CAP_CHOWN",
+				"CAP_DAC_OVERRIDE",
+				"CAP_FSETID",
+				"CAP_FOWNER",
+				"CAP_MKNOD",
+				"CAP_NET_RAW",
+				"CAP_SETGID",
+				"CAP_SETUID",
+				"CAP_SETFCAP",
+				"CAP_SETPCAP",
+				"CAP_NET_BIND_SERVICE",
+				"CAP_SYS_CHROOT",
 				"CAP_KILL",
-				"CAP_NET_BIND_SERVICE"
+				"CAP_AUDIT_WRITE"
 			]
 		},
 		"rlimits": [
@@ -52,7 +107,7 @@
 	},
 	"root": {
 		"path": "/home/vagrant/go/src/gitlab.com/expected.sh/agent/rootfs",
-		"readonly": true
+		"readonly": false
 	},
 	"hostname": "runc",
 	"mounts": [
