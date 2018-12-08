@@ -27,17 +27,16 @@
       ]
     },
     "args": [
-      "docker-entrypoint.sh",
-      "redis-server"
+      "nginx",
+      "-g",
+      "daemon off;"
     ],
     "env": [
       "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      "HOSTNAME=1d39efa799cd",
-      "REDIS_VERSION=5.0.2",
-      "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.2.tar.gz",
-      "REDIS_DOWNLOAD_SHA=937dde6164001c083e87316aa20dad2f8542af089dfcb1cbb64f9c8300cd00ed"
+      "HOSTNAME=b3af52f67293",
+      "NGINX_VERSION=1.15.7"
     ],
-    "cwd": "/data",
+    "cwd": "/",
     "capabilities": [
       "CAP_CHOWN",
       "CAP_DAC_OVERRIDE",
@@ -57,9 +56,9 @@
     "apparmorProfile": "docker-default"
   },
   "root": {
-    "path": "/var/lib/docker/aufs/mnt/30424e65e55a1042147cd3c74af236126fba53b5c25d9c6db9ee3a4d6fa0b86e"
+    "path": "/var/lib/docker/aufs/mnt/40d1ac6bdb30e3c3d69405f41a6133e861b578148d4eab0b402e0047e134e69e"
   },
-  "hostname": "1d39efa799cd",
+  "hostname": "b3af52f67293",
   "mounts": [
     {
       "destination": "/proc",
@@ -127,17 +126,9 @@
       ]
     },
     {
-      "destination": "/data",
-      "type": "bind",
-      "source": "/var/lib/docker/volumes/c079185b10987015c4a4d38b13e05a1abe115f397d0f6875cfd7432f4793f218/_data",
-      "options": [
-        "rbind"
-      ]
-    },
-    {
       "destination": "/etc/resolv.conf",
       "type": "bind",
-      "source": "/var/lib/docker/containers/1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501/resolv.conf",
+      "source": "/var/lib/docker/containers/b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e/resolv.conf",
       "options": [
         "rbind",
         "rprivate"
@@ -146,7 +137,7 @@
     {
       "destination": "/etc/hostname",
       "type": "bind",
-      "source": "/var/lib/docker/containers/1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501/hostname",
+      "source": "/var/lib/docker/containers/b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e/hostname",
       "options": [
         "rbind",
         "rprivate"
@@ -155,7 +146,7 @@
     {
       "destination": "/etc/hosts",
       "type": "bind",
-      "source": "/var/lib/docker/containers/1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501/hosts",
+      "source": "/var/lib/docker/containers/b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e/hosts",
       "options": [
         "rbind",
         "rprivate"
@@ -164,7 +155,7 @@
     {
       "destination": "/dev/shm",
       "type": "bind",
-      "source": "/var/lib/docker/containers/1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501/shm",
+      "source": "/var/lib/docker/containers/b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e/shm",
       "options": [
         "rbind",
         "rprivate"
@@ -177,8 +168,8 @@
         "path": "/usr/bin/dockerd",
         "args": [
           "libnetwork-setkey",
-          "1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501",
-          "22839e9dc8f7e26bc402e73f662263e8665c4ab01ca266040ca671775d15500e"
+          "b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e",
+          "c81004693db796e0dfd1aa3e11136bd124bb7c62de5f6a9dd1623857ce77a1b6"
         ]
       }
     ]
@@ -253,7 +244,7 @@
         "blkioWeight": 0
       }
     },
-    "cgroupsPath": "/docker/1d39efa799cd1d728ccfe380a07b36191d0295553e7f261f58d818d7238fc501",
+    "cgroupsPath": "/docker/b3af52f672932906b7fd9cd448d341443860f5986f296b599514bcc7b8940e7e",
     "namespaces": [
       {
         "type": "mount"
