@@ -22,14 +22,7 @@ func setupNetworking(runtime runc.Runc, networking cni.CNI) {
 	state, err := runtime.State(context.Background(), "hello")
 	checkErr(err)
 	log.Printf("%v\n", state.Pid)
-	result, err := networking.Setup("eth0", fmt.Sprintf("/proc/%v/ns/net", state.Pid), cni.WithCapabilityPortMap([]cni.PortMapping{
-		{
-			HostPort: 8080,
-			ContainerPort: 80,
-			HostIP: "10.1.0.1",
-			Protocol: "tcp",
-		},
-	}))
+	result, err := networking.Setup("eth0", fmt.Sprintf("/proc/%v/ns/net", state.Pid))
 	checkErr(err)
 	log.Printf("=== INTERFACES ===\n")
 	for _, config := range result.Interfaces {

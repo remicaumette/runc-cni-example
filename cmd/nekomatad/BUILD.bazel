@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "gitlab.com/expected.sh/agent/cmd/nekomatad",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//pkg/protocol:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "nekomatad",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
