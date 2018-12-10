@@ -9,7 +9,7 @@ tar xvf go1.11.2.linux-amd64.tar.gz -C /usr/local
 echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
 curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
 apt-get update
-apt-get install bazel
+apt-get install -y bazel
 
 wget -q https://github.com/opencontainers/runc/releases/download/v1.0.0-rc6/runc.amd64 -O /usr/local/bin/runc
 chmod a+x /usr/local/bin/runc
@@ -24,6 +24,9 @@ wget -q https://github.com/containernetworking/plugins/releases/download/v0.7.4/
 mkdir -p /opt/cni/plugins
 tar xvf cni-plugins-amd64-v0.7.4.tgz -C /opt/cni/plugins
 
+wget -q https://github.com/google/protobuf/releases/download/v3.3.0/protoc-3.3.0-linux-x86_64.zip
+unzip -o protoc-3.3.0-linux-x86_64.zip -d /usr/local bin/protoc
+
 mkdir -p /etc/cni/net.d
 
 echo "export GOPATH=~/go" >> /home/vagrant/.bashrc
@@ -31,3 +34,6 @@ echo "export GOROOT=/usr/local/go" >> /home/vagrant/.bashrc
 echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> /home/vagrant/.bashrc
 echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> /home/vagrant/.bashrc
 echo "export GO111MODULE=on" >> /home/vagrant/.bashrc
+
+source /home/vagrant/.bashrc
+env GO111MODULE=off go get -u github.com/golang/protobuf/protoc-gen-go
