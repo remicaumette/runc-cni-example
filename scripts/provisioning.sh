@@ -6,11 +6,6 @@ apt-get install -y unzip git build-essential openjdk-8-jdk
 wget -q https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
 tar xvf go1.11.2.linux-amd64.tar.gz -C /usr/local
 
-echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
-curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
-apt-get update
-apt-get install -y bazel
-
 wget -q https://github.com/opencontainers/runc/releases/download/v1.0.0-rc6/runc.amd64 -O /usr/local/bin/runc
 chmod a+x /usr/local/bin/runc
 

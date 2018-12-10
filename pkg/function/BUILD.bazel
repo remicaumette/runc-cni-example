@@ -1,9 +1,0 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-
-go_library(
-    name = "go_default_library",
-    srcs = ["server.go"],
-    importpath = "gitlab.com/expected.sh/agent/pkg/function",
-    visibility = ["//visibility:public"],
-    deps = ["//pkg/protocol:go_default_library"],
-)
