@@ -12,7 +12,7 @@ import (
 
 func checkErr(err error) {
 	if err != nil {
-		log.Output(2, fmt.Sprintf("an error occurred: %v\n", err))
+		log.Output(1, fmt.Sprintf("an error occurred: %v\n", err))
 		os.Exit(1)
 	}
 }
@@ -58,8 +58,8 @@ func main() {
 	err = runtime.Start(context.Background(), "hello")
 	checkErr(err)
 	networking, err := cni.New(cni.WithMinNetworkCount(2),
-		cni.WithPluginConfDir("/home/vagrant/go/src/gitlab.com/expected.sh/agent/net"),
-		cni.WithPluginDir([]string{"/opt/cni/"}),
+		cni.WithPluginConfDir("/etc/cni/net.d"),
+		cni.WithPluginDir([]string{"/opt/cni/plugins"}),
 	)
 	checkErr(err)
 	checkErr(networking.Load(cni.WithLoNetwork, cni.WithDefaultConf))

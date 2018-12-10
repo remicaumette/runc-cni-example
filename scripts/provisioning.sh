@@ -1,21 +1,26 @@
 #!/usr/bin/env bash
 apt-get update
 apt-get upgrade -y
-apt-get install -y unzip git build-essential
+apt-get install -y unzip git build-essential openjdk-8-jdk
 
-wget https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
+wget -q https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
 tar xvf go1.11.2.linux-amd64.tar.gz -C /usr/local
 
-wget https://github.com/opencontainers/runc/releases/download/v1.0.0-rc6/runc.amd64 -O /usr/local/bin/runc
+echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" | tee /etc/apt/sources.list.d/bazel.list
+curl https://bazel.build/bazel-release.pub.gpg | apt-key add -
+apt-get update
+apt-get install bazel
+
+wget -q https://github.com/opencontainers/runc/releases/download/v1.0.0-rc6/runc.amd64 -O /usr/local/bin/runc
 chmod a+x /usr/local/bin/runc
 
-wget https://storage.googleapis.com/gvisor/releases/nightly/latest/runsc -O /usr/local/bin/runsc
+wget -q https://storage.googleapis.com/gvisor/releases/nightly/latest/runsc -O /usr/local/bin/runsc
 chmod a+x /usr/local/bin/runsc
 
-wget https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz
+wget -q https://github.com/containernetworking/cni/releases/download/v0.6.0/cni-amd64-v0.6.0.tgz
 tar xvf cni-amd64-v0.6.0.tgz -C /usr/local/bin
 
-wget https://github.com/containernetworking/plugins/releases/download/v0.7.4/cni-plugins-amd64-v0.7.4.tgz
+wget -q https://github.com/containernetworking/plugins/releases/download/v0.7.4/cni-plugins-amd64-v0.7.4.tgz
 mkdir -p /opt/cni/plugins
 tar xvf cni-plugins-amd64-v0.7.4.tgz -C /opt/cni/plugins
 
