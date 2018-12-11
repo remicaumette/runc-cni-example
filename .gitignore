@@ -5,4 +5,4 @@
 /.vscode
 /.vagrant
 /rootfs
-/bazel-*
+/bin

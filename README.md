@@ -1,7 +1,3 @@
-```bash
-ctr i pull docker.io/google/golang-hello:latest
-
-```
 # how setup dns ?
 in /etc/resolv.conf:
 ```

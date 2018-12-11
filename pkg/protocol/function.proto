@@ -4,9 +4,16 @@ package protocol;
 
 message Function {
     string name = 1;
-    uint32 pid = 2;
-    string rootfs = 3;
-    string ip = 4;
+    string root = 2;
+    bool running = 3;
+    uint32 pid = 4;
+    Network network = 6;
+
+    message Network {
+        string ip = 1;
+        string gateway = 2;
+        string mask = 3;
+    }
 }
 
 message CreateRequest {
@@ -22,10 +29,10 @@ message ListRequest {
 }
 
 message ListResponse {
-    repeated Function function = 1;
+    repeated Function functions = 1;
 }
 
 service FunctionService {
-    rpc Create(CreateRequest) returns (CreateResponse) {}
-    rpc List(ListRequest) returns (ListResponse) {}
+    rpc Create (CreateRequest) returns (CreateResponse);
+    rpc List (ListRequest) returns (ListResponse);
 }

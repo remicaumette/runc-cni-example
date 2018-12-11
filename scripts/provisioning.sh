@@ -29,6 +29,3 @@ echo "export GOROOT=/usr/local/go" >> /home/vagrant/.bashrc
 echo "export PATH=\"\$GOPATH/bin:\$PATH\"" >> /home/vagrant/.bashrc
 echo "export PATH=\"\$GOROOT/bin:\$PATH\"" >> /home/vagrant/.bashrc
 echo "export GO111MODULE=on" >> /home/vagrant/.bashrc
-
-source /home/vagrant/.bashrc
-env GO111MODULE=off go get -u github.com/golang/protobuf/protoc-gen-go
